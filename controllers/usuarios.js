@@ -21,7 +21,8 @@ async function obtenerUsuarios(req, res) {
 
     try {
         const result = await pool.query('SELECT * FROM usuarios');
-        res.json(result.rows);
+        res.json("Petter")
+        //res.json(result.rows);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al obtener los usuarios' });
