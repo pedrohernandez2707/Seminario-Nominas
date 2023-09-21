@@ -11,6 +11,6 @@ router.get('/', verificarToken, extractDbConfig, empleadosController.obtenerEmpl
 router.post('/', verificarToken, extractDbConfig, empleadosController.agregarEmpleado);
 
 // Ruta para actualizar un empleado por ID
-router.put('/:Id', verificarToken, extractDbConfig, empleadosController.actualizarEmpleado);
+router.put('/', verificarToken, extractDbConfig, empleadosController.actualizarEmpleado);
 
 module.exports = router;

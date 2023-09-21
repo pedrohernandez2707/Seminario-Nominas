@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/empresas', empresasRoutes);
-app.use('/api/empleado', empleadoRoutes);
+app.use('/api/empleados', empleadoRoutes);
 
 
 // Iniciar el servidor
