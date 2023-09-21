@@ -20,9 +20,8 @@ async function obtenerUsuarios(req, res) {
   const pool = new Pool(dbConfig)
 
     try {
-        const result = await pool.query('SELECT * FROM usuarios');
-        res.json("Petter")
-        //res.json(result.rows);
+        const result = await pool.query('SELECT id, nombre, apellido, activo, rol, email, contraseña FROM usuarios');
+        res.json(result.rows);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al obtener los usuarios' });
@@ -49,8 +48,7 @@ async function agregarUsuario(req, res) {
 
 // Endpoint para actualizar un usuario por ID
 async function actualizarUsuario(req, res) {
-    const { id } = req.params;
-    const { nombre, apellido, email, contraseña, activo, rol } = req.body;
+    const {id, nombre, apellido, email, contraseña, activo, rol } = req.body;
    
     const {dbConfig } = req;
 

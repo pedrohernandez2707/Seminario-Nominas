@@ -13,10 +13,14 @@ const masterPool = new Pool({
 
 async function iniciarSesion(req, res) {
 
-  const { email, contraseña, idEmpresa } = req.body;
+
+  const { email, pass, idEmpresa } = req.body;
+
+  if (!email || !pass || !idEmpresa){
+    return res.status(400).json({mensaje: 'Faltan Parametros para el Login'})
+  }
 
   try {
-    
       const query = 'SELECT * FROM list_empresas where id = $1';
       const result = await masterPool.query(query,[idEmpresa]);
 
@@ -44,19 +48,31 @@ async function iniciarSesion(req, res) {
 
     
       // Consultar la base de datos para verificar las credenciales
-      const query2 = 'SELECT id FROM usuarios WHERE email = $1 AND contraseña = $2';
-      const result2 = await pool.query(query2, [email, contraseña]);
+      const query2 = 'SELECT id, nombre, apellido, rol FROM usuarios WHERE email = $1 AND contraseña = $2';
+      const result2 = await pool.query(query2, [email, pass]);
   
       if (result2.rows.length === 0) {
-        return res.status(401).json({ mensaje: 'Credenciales inválidas' });
+        return res.status(400).json({ mensaje: 'Credenciales inválidas' });
       }
-  
+      
       const usuarioId = result2.rows[0].id;
 
       const dynamicDbConfig = { ...dbConfig, database: dbConfig.database };
 
-      const token = generarToken(usuarioId, dynamicDbConfig); // Generar un token
-      res.json({ token });
+      // Generar un token
+      const token = generarToken(usuarioId, dynamicDbConfig);
+      
+      const data ={
+        token,
+        nombre : result2.rows[0].nombre + ' ' + result2.rows[0].apellido,
+        rol : result2.rows[0].rol
+      } 
+
+      //console.log(data);
+      
+
+      res.json({ data });
+
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Error en la autenticación' });

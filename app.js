@@ -11,6 +11,13 @@ const port = process.env.PORT || 3000;
 // Middleware para parsear el cuerpo de las solicitudes JSON
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 // Usar las rutas de usuarios
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/login', loginRoutes);

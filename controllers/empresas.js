@@ -18,7 +18,7 @@ async function obtenerEmpresas(req, res) {
   //console.log(dbConfig)
 
     try {
-        const result = await masterPool.query('SELECT id, nombre, logo_url FROM list_empresas WHERE estado = true');
+        const result = await masterPool.query('SELECT id as value, nombre as label FROM list_empresas WHERE estado = true');
         res.json(result.rows);
     } catch (error) {
         console.error(error);
