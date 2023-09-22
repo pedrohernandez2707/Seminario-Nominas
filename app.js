@@ -4,6 +4,9 @@ const usuariosRoutes = require('./routes/usuarios'); // Rutas de usuarios
 const loginRoutes = require('./routes/login'); // Rutas de usuarios
 const empresasRoutes = require('./routes/empresas'); // Rutas de usuarios
 const empleadoRoutes = require('./routes/empleado'); // Rutas de usuarios
+const productosRoutes = require('./routes/productos'); // Rutas de usuarios
+const compraEncRoutes = require('./routes/comprasEnc'); // Rutas de usuarios
+const compraDetRoutes = require('./routes/comprasDet'); // Rutas de usuarios
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,6 +26,9 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/empresas', empresasRoutes);
 app.use('/api/empleados', empleadoRoutes);
+app.use('/api/productos', productosRoutes);
+app.use('/api/compraEnc', compraEncRoutes);
+app.use('/api/compraDet', compraDetRoutes);
 
 
 // Iniciar el servidor

@@ -17,6 +17,24 @@ async function obtenerEmpleados(req, res) {
   }
 }
 
+
+async function obtenerEmpleadosCombo(req, res) {
+  // Obtiene la configuración de conexión dinámica desde el token
+  const dbConfig = req.dbConfig;
+
+  // Configura la conexión a la base de datos utilizando la configuración dinámica
+  const pool = new Pool(dbConfig);
+
+  try {
+    const query = `SELECT id as value, CONCAT(nombres, ' ', apellidos) as label FROM Empleados`;
+    const result = await pool.query(query);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener los empleados' });
+  }
+}
+
 async function agregarEmpleado(req, res) {
 
   const { Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Profesion } = req.body;
@@ -71,4 +89,5 @@ module.exports = {
   obtenerEmpleados,
   agregarEmpleado,
   actualizarEmpleado,
+  obtenerEmpleadosCombo
 };

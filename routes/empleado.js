@@ -6,6 +6,7 @@ const extractDbConfig = require('../middleware/extractDbConfig');
 
 // Ruta para obtener todos los empleados
 router.get('/', verificarToken, extractDbConfig, empleadosController.obtenerEmpleados);
+router.get('/combo', verificarToken, extractDbConfig, empleadosController.obtenerEmpleadosCombo);
 
 // Ruta para agregar un empleado
 router.post('/', verificarToken, extractDbConfig, empleadosController.agregarEmpleado);
