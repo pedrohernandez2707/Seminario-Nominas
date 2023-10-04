@@ -1,4 +1,6 @@
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
+
 
 // Configuración de conexión a la base de datos PostgreSQL
 // const pool = new Pool({
@@ -35,9 +37,15 @@ async function agregarUsuario(req, res) {
     const {dbConfig } = req;
 
     const pool = new Pool(dbConfig)
+
+    const salt = bcrypt.genSaltSync(10);
+
+    // Cifrar la contraseña con la sal
+    const hashedPassword = bcrypt.hashSync(contraseña, salt);
+    
     
     try {
-      const result = await pool.query('INSERT INTO usuarios (nombre, apellido, email, contraseña, activo, rol) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [nombre, apellido, email, contraseña, activo, rol]);
+      const result = await pool.query('INSERT INTO usuarios (nombre, apellido, email, contraseña, activo, rol) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [nombre, apellido, email, hashedPassword, activo, rol]);
       res.json(result.rows[0]);
     } catch (error) {
       console.error(error);
@@ -62,6 +70,7 @@ async function actualizarUsuario(req, res) {
       res.status(500).json({ error: 'Error al actualizar el usuario' });
     }
 }
+
 
 module.exports = {
   obtenerUsuarios,

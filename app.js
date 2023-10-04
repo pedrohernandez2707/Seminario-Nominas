@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware para parsear el cuerpo de las solicitudes JSON
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '20mb'}));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8080');

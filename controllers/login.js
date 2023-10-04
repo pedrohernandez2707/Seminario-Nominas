@@ -1,5 +1,7 @@
 const { generarToken } = require('../middleware/auth');
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
+
 
 // Configuración de conexión a la base de datos PostgreSQL
 
@@ -48,11 +50,19 @@ async function iniciarSesion(req, res) {
 
     
       // Consultar la base de datos para verificar las credenciales
-      const query2 = 'SELECT id, nombre, apellido, rol FROM usuarios WHERE email = $1 AND contraseña = $2';
-      const result2 = await pool.query(query2, [email, pass]);
+      const query2 = 'SELECT id, nombre, apellido, contraseña, rol FROM usuarios WHERE email = $1';
+      
+      const result2 = await pool.query(query2, [email]); //pas
   
       if (result2.rows.length === 0) {
         return res.status(400).json({ mensaje: 'Credenciales inválidas' });
+      }
+
+      
+      const isPasswordValid = bcrypt.compareSync(pass, result2.rows[0].contraseña);
+
+      if (!isPasswordValid){
+        return res.status(400).json({mensaje: 'Credenciales Invalidas'})
       }
       
       const usuarioId = result2.rows[0].id;
