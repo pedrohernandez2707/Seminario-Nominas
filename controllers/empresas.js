@@ -22,7 +22,7 @@ async function obtenerEmpresas(req, res) {
         res.json(result.rows);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error al obtener la lista de Empresas' });
+        res.status(500).json({ error: 'Error al obtener la lista de Empresas: ' + error });
     }
 }
 

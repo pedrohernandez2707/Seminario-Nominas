@@ -39,7 +39,6 @@ async function agregarCompraDet(req, res) {
 
     //console.log(compraId, productoId, cantidad, precioUnitario);
     
-
     const {dbConfig } = req;
 
     const pool = new Pool(dbConfig)

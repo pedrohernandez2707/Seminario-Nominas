@@ -15,7 +15,7 @@ async function obtenerEmpleados(req, res) {
     res.json(result.rows);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener los empleados' });
+    res.status(500).json({ mensaje: 'Error al obtener los empleados' });
   }
 }
 
@@ -122,13 +122,13 @@ async function obtenerEmpleadobyID(req, res) {
     res.json(result.rows);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener los empleados' });
+    res.status(500).json({ mensaje: 'Error al obtener los empleados' });
   }
 }
 
 async function agregarEmpleado(req, res) {
 
-  const { Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Profesion } = req.body;
+  const { Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Sueldo } = req.body;
 
   // Obtiene la configuración de conexión dinámica desde el token
   const dbConfig = req.dbConfig;
@@ -138,10 +138,10 @@ async function agregarEmpleado(req, res) {
 
   try {
     const query = `
-      INSERT INTO Empleados (Nombres, Apellidos, Telefono, Direccion, Dpi, AfiliacionIgss, EstadoCivil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, PhotoUrl, Puesto, Departamento, Profesion)
+      INSERT INTO Empleados (Nombres, Apellidos, Telefono, Direccion, Dpi, AfiliacionIgss, EstadoCivil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, PhotoUrl, Puesto, Departamento, Sueldo)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *`;
 
-    const values = [Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Profesion];
+    const values = [Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Sueldo];
 
     const result = await pool.query(query, values);
     res.json(result.rows[0]);
@@ -169,7 +169,7 @@ async function agregarFamiliar(req, res) {
     values
     ($1, $2, $3, $4) RETURNING *`;
 
-    const values = [Tipo, Genero, Telefono, Nombre];
+    const values = [Tipo, Genero, Nombre, Telefono];
 
     const result = await pool.query(query, values);
 
@@ -249,7 +249,7 @@ async function asignarFamiliar(req, res) {
 
 
 async function actualizarEmpleado(req, res) {
-  const { Id, Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Profesion } = req.body;
+  const { Id, Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Sueldo } = req.body;
   // Obtiene la configuración de conexión dinámica desde el token
   const dbConfig = req.dbConfig;
 
@@ -259,10 +259,10 @@ async function actualizarEmpleado(req, res) {
   try {
     const query = `
       UPDATE Empleados
-      SET Nombres = $1, Apellidos = $2, Telefono = $3, Direccion = $4, Dpi = $5, AfiliacionIgss = $6, EstadoCivil = $7, Fecha_Nacimiento = $8, FechaContratacion = $9, FechaBaja = $10, Estado = $11, PhotoUrl = $12, Puesto = $13, Departamento = $14, Profesion = $15
+      SET Nombres = $1, Apellidos = $2, Telefono = $3, Direccion = $4, Dpi = $5, AfiliacionIgss = $6, EstadoCivil = $7, Fecha_Nacimiento = $8, FechaContratacion = $9, FechaBaja = $10, Estado = $11, PhotoUrl = $12, Puesto = $13, Departamento = $14, Sueldo = $15
       WHERE Id = $16 RETURNING *`;
 
-    const values = [Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Profesion, Id];
+    const values = [Nombres, Apellidos, Telefono, Direccion, Dpi, Afiliacion_Igss, Estado_Civil, Fecha_Nacimiento, FechaContratacion, FechaBaja, Estado, Photo_Url, Puesto, Departamento, Sueldo, Id];
     
     const result = await pool.query(query, values);
 

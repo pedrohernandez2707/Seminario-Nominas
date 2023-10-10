@@ -7,6 +7,7 @@ const extractDbConfig = require('../middleware/extractDbConfig');
 // Rutas para usuarios
 router.get('/', verificarToken, extractDbConfig, usuariosController.obtenerUsuarios);
 router.post('/', verificarToken, extractDbConfig, usuariosController.agregarUsuario);
+router.post('/clave', verificarToken, extractDbConfig, usuariosController.actualizarClave);
 router.put('/', verificarToken, extractDbConfig, usuariosController.actualizarUsuario);
 
 
