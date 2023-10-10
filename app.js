@@ -22,7 +22,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json({limit: '20mb'}));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080, https://pedrohernandez2707.github.io');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
