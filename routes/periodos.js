@@ -10,6 +10,7 @@ router.get('/activo', verificarToken, extractDbConfig, periodosController.obtene
 
 
 router.post('/', verificarToken, extractDbConfig, periodosController.agregarPeriodo);
+router.post('/cerrar', verificarToken, extractDbConfig, periodosController.cerrarPeriodo);
 
 
 

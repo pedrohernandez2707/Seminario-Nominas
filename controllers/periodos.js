@@ -9,7 +9,7 @@ async function obtenerPeriodos(req, res) {
   const pool = new Pool(dbConfig)
 
     try {
-      const result = await pool.query(`SELECT * FROM periodos ORDER BY estado, periodo, mes, "año"`);
+      const result = await pool.query(`SELECT t.descripcion, p.* FROM periodos p inner join tipo_periodo t on t.id = p.periodo ORDER BY estado, periodo, mes, "año"`);
       res.json(result.rows);
     } catch (error) {
       res.status(500).json({ mensaje: 'Error al obtener: ' + error  });
@@ -49,10 +49,35 @@ async function agregarPeriodo(req, res) {
     }
 }
 
+async function cerrarPeriodo(req, res){
 
+  const { periodo} = req.body;
+
+  const { dbConfig } = req;
+
+  const pool = new Pool(dbConfig)
+
+
+
+  try {
+
+    const resul = await pool.query('select * from nomina where periodo = $1',[periodo]);
+
+    if(resul.rows.length === 0){
+      return res.status(400).json({mensaje: 'No existe ningun registro en la nomina, no es posible cerrar el periodo'});
+    }
+
+    const result = await pool.query(`update periodos set estado = 'G' where id = $1`, [periodo]);
+    res.status(200).json({result});
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al actualizar: ' + error });
+  }
+
+}
 
 module.exports = {
   obtenerPeriodos,
   agregarPeriodo,
-  obtenerPeriodosActivo
+  obtenerPeriodosActivo,
+  cerrarPeriodo
 };

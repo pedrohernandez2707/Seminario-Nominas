@@ -14,6 +14,7 @@ const comisionesRoutes = require('./routes/comisiones'); // Rutas de comisiones
 const bonificacionesRoutes = require('./routes/bonificaciones'); // Rutas de bonificaciones
 const reporteDiasRoutes = require('./routes/reporteDias'); // Rutas para el reporte de dias
 const aportesRoutes = require('./routes/aportes'); // Rutas para el reporte de dias
+const nominaRoutes = require('./routes/nomina'); // Rutas para el reporte de dias
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,6 +51,7 @@ app.use('/api/comisiones', comisionesRoutes);
 app.use('/api/bonificaciones', bonificacionesRoutes);
 app.use('/api/dias', reporteDiasRoutes);
 app.use('/api/aportes', aportesRoutes);
+app.use('/api/nomina', nominaRoutes);
 
 
 // Iniciar el servidor
