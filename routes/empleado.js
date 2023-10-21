@@ -13,6 +13,7 @@ router.get('/byID', verificarToken, extractDbConfig, empleadosController.obtener
 router.get('/familiar', verificarToken, extractDbConfig, empleadosController.obtenerFamiliares);
 router.get('/famEmpleado', verificarToken, extractDbConfig, empleadosController.obtenerFamiliaresEmpleado);
 router.get('/obtenerDocs', verificarToken, extractDbConfig, empleadosController.obtenerDocs);
+router.get('/empleadoDash', verificarToken, extractDbConfig, empleadosController.empleadoDash);
 
 
 // Ruta para agregar un empleado

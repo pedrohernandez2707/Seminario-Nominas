@@ -27,8 +27,7 @@ async function obtenerCompraDet(req, res) {
         );
         res.json(result.rows);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al obtener los detalles de la compra' });
+        res.status(500).json({ mensaje: 'Error al obtener los detalles de la compra' });
     }
 }
 
@@ -47,8 +46,7 @@ async function agregarCompraDet(req, res) {
       const result = await pool.query('CALL insertar_compra_detalle2($1, $2, $3, $4)', [compraId, productoId, parseInt(cantidad) , precioUnitario]);
       res.json(result.rows[0]);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al agregar el detalle de la compra' });
+      res.status(500).json({ mensaje: 'Error al agregar el detalle de la compra: ' + error });
     }
 }
 

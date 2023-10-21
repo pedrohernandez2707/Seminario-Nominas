@@ -331,7 +331,7 @@ async function obtenerDocs(req, res) {
     const idEmpleado = req.query.idEmpleado;
 
     if(!idEmpleado){
-      return res.status(400).json({ error: 'Debe Enviar el Id Empleado' });
+      return res.status(400).json({ mensaje: 'Debe Enviar el Id Empleado' });
     }
 
     const dbConfig = req.dbConfig;
@@ -407,6 +407,25 @@ async function saveDoc(req, res) {
 
 
 
+async function empleadoDash(req, res) {
+  const dbConfig = req.dbConfig;
+
+  const pool = new Pool(dbConfig);
+
+  try {
+    const query = `SELECT * FROM vempleados_dash LIMIT 8`;
+
+    const result = await pool.query(query);
+
+    res.json(result.rows);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Error al obtener los empleados' });
+  }
+}
+
+
 module.exports = {
   obtenerEmpleados,
   agregarEmpleado,
@@ -420,6 +439,7 @@ module.exports = {
   asignarFamiliar,
   desasignarFamiliar,
   saveDoc,
-  obtenerDocs
+  obtenerDocs,
+  empleadoDash
 
 };

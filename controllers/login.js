@@ -85,7 +85,7 @@ async function iniciarSesion(req, res) {
 
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Error en la autenticación' });
+      res.status(500).json({ mensaje: 'Error en la autenticación' });
     }
   }
 
